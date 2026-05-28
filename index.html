@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elastic Football Persona Assessment</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <main class="app">
+        <aside class="match-panel">
+            <div class="elastic-brand" aria-label="Elastic">
+                <span class="logo-dot yellow"></span>
+                <span class="logo-dot blue"></span>
+                <span class="logo-dot pink"></span>
+                <span class="logo-dot teal"></span>
+                <span class="logo-dot green"></span>
+                <strong>Elastic</strong>
+            </div>
+
+            <div class="scoreboard">
+                <p class="label">Football Persona Assessment</p>
+                <h1>Discover Your Role on the Pitch</h1>
+                <p>
+                    Find out how your approach to technology, operations, and leadership maps to your team’s style of
+                    play.
+                </p>
+            </div>
+
+            <div class="mini-pitch" aria-hidden="true">
+                <span class="center-line"></span>
+                <span class="center-circle"></span>
+                <span class="goal left"></span>
+                <span class="goal right"></span>
+                <span class="ball">⚽</span>
+            </div>
+        </aside>
+
+        <section class="workspace">
+            <header class="progress-bar">
+                <button class="progress-step active" type="button" data-step="0">
+                    <span>01</span>
+                    Registration
+                </button>
+                <button class="progress-step" type="button" data-step="1">
+                    <span>02</span>
+                    Assessment
+                </button>
+                <button class="progress-step" type="button" data-step="2">
+                    <span>03</span>
+                    Persona
+                </button>
+            </header>
+            <form method="post" action="" name="contact-form" id="main-form">
+                <section id="registrationPage" class="page active">
+                    <p class="section-kicker">Player Registration</p>
+                    <h2>Enter your matchday details.</h2>
+
+                    <div class="form-grid">
+                        <label>
+                            <span class="span">Full Name</span>
+                            <input id="fullName" name="Name" type="text" placeholder="Your name" required />
+                        </label>
+
+                        <label>
+                            <span class="span">Work Email</span>
+                            <input id="workEmail" name="Email" type="email" placeholder="name@company.com" required />
+                        </label>
+                    </div>
+
+                    <div class="field-block">
+                        <span class="field-title">Job Title</span>
+                        <div class="role-grid">
+                            <label><input type="radio" name="jobTitle" value="SRE Leader" /> <span style="margin: 0px;">SRE Leader</span></label>
+                            <label><input type="radio" name="jobTitle" value="Developer" /> <span style="margin: 0px;">Developer</span></label>
+                            <label><input type="radio" name="jobTitle" value="CISO" /> <span style="margin: 0px;">CISO</span></label>
+                            <label><input type="radio" name="jobTitle" value="VP of Engineering" /> <span>VP of
+                                    Engineering</span></label>
+                            <label><input type="radio" name="jobTitle" value="CTO" /> <span style="margin: 0px;">CTO</span></label>
+                            <label><input type="radio" name="jobTitle" value="Other" /> <span style="margin: 0px;">Other</span></label>
+                        </div>
+                        <input id="otherJobTitle" class="hidden other-input" type="text"
+                            placeholder="Enter your job title" />
+                    </div>
+
+                    <footer class="actions">
+                        <button id="startBtn" class="primary-btn" type="button">Start Assessment</button>
+                         <!-- <input id="startBtn" class="primary-btn" type="submit" value="submit" Start Assessment /> -->
+                    </footer>
+                </section>
+            </form>
+
+            <section id="questionsPage" class="page">
+                <p class="section-kicker">Matchday Assessment</p>
+                <h2>Choose the answer that sounds most like your squad.</h2>
+
+                <form id="questionsForm">
+                    <div id="questionsContainer" class="questions-list"></div>
+                    <p id="errorMessage" class="error-message"></p>
+
+                    <footer class="actions between">
+                        <button id="backBtn" class="ghost-btn" type="button">Back</button>
+                        <button class="primary-btn" type="submit">Reveal Persona</button>
+                    </footer>
+                </form>
+            </section>
+
+            <section id="personaPage" class="page">
+                <p class="section-kicker">Your Football Persona</p>
+                <h2>Your player card is ready.</h2>
+
+                <article class="persona-card">
+                    <div class="card-header">
+                        <span id="personaPlayerCard">Player Card</span>
+                        <strong id="personaScore">99</strong>
+                    </div>
+
+                    <div class="player-mark" aria-hidden="true">⚽</div>
+
+                    <div class="card-content">
+                        <h3 id="personaTitle"></h3>
+                        <p id="personaTagline"></p>
+                        <strong id="personaRole"></strong>
+                        <p id="personaDescription"></p>
+                    </div>
+                </article>
+
+
+                <div class="insight-strip">
+                    <span>Operational priorities</span>
+                    <span>Buying readiness</span>
+                    <span>Elastic alignment</span>
+                </div>
+
+                <footer class="actions between">
+                    <button id="restartBtn" class="ghost-btn" type="button">Start Again</button>
+                </footer>
+            </section>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

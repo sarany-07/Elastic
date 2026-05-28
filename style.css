@@ -1,0 +1,658 @@
+/* =========================================
+   ELASTIC (EUI) DESIGN TOKENS
+   ========================================= */
+:root {
+    /* Brand Colors */
+    --euiPrimary: #0077CC;
+    --euiPrimaryHover: #005A9E;
+    --euiAccentPink: #ED4096;
+    --euiAccentTeal: #00BFB3;
+    --euiAccentYellow: #FEC514;
+    --euiAccentGreen: #93C83E;
+
+    /* Neutrals & Shades */
+    --euiInk: #1A1C21;
+    --euiText: #343741;
+    --euiMuted: #69707D;
+    --euiLightShade: #F5F7FA;
+    --euiMediumShade: #D3DAE6;
+    --euiDarkShade: #98A2B3;
+    --euiEmptyShade: #FFFFFF;
+
+    /* Geometry */
+    --euiBorderRadius: 6px;
+    --euiShadow: 0 4px 12px rgba(26, 28, 33, 0.08);
+    --euiFocusRing: 0 0 0 3px rgba(0, 119, 204, 0.2);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    /* Clean EUI Workspace Background */
+    background: var(--euiLightShade);
+    color: var(--euiText);
+    font-family: 'Inter', BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* =========================================
+   LAYOUT
+   ========================================= */
+.app {
+    display: grid;
+    grid-template-columns: minmax(330px, 0.8fr) minmax(520px, 1.2fr);
+    min-height: 100vh;
+    padding: 24px;
+    gap: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* =========================================
+   THE "FUNKY" BRAND PANEL (Left)
+   ========================================= */
+.match-panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: calc(100vh - 48px);
+    border-radius: var(--euiBorderRadius);
+    padding: 40px;
+    overflow: hidden;
+    /* Deep Elastic Brand Gradient */
+    background: linear-gradient(135deg, var(--euiInk) 0%, #0d121a 100%);
+    color: var(--euiEmptyShade);
+    box-shadow: var(--euiShadow);
+}
+
+.match-panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--euiAccentYellow), var(--euiPrimary), var(--euiAccentPink), var(--euiAccentTeal));
+}
+
+.elastic-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.logo-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.yellow {
+    background: var(--euiAccentYellow);
+}
+
+.blue {
+    background: var(--euiPrimary);
+}
+
+.pink {
+    background: var(--euiAccentPink);
+}
+
+.teal {
+    background: var(--euiAccentTeal);
+}
+
+.green {
+    background: var(--euiAccentGreen);
+}
+
+.scoreboard {
+    max-width: 560px;
+}
+
+.label,
+.section-kicker {
+    margin: 0 0 12px;
+    color: var(--euiAccentTeal);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+h1,
+h2,
+h3,
+p {
+    margin-top: 0;
+}
+
+h1 {
+    margin-bottom: 16px;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+}
+
+.scoreboard p:last-child {
+    color: var(--euiDarkShade);
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+.mini-pitch {
+    position: relative;
+    height: 200px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--euiBorderRadius);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.center-line {
+    position: absolute;
+    inset: 0 auto 0 50%;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.center-circle {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+}
+
+.goal {
+    position: absolute;
+    width: 40px;
+    height: 80px;
+    top: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transform: translateY(-50%);
+}
+
+.goal.left {
+    left: -1px;
+    border-left: 0;
+}
+
+.goal.right {
+    right: -1px;
+    border-right: 0;
+}
+
+.ball {
+    position: absolute;
+    right: 22%;
+    top: 28%;
+    font-size: 24px;
+}
+
+/* =========================================
+   THE CLEAN WORKSPACE (Right)
+   ========================================= */
+.workspace {
+    background: var(--euiEmptyShade);
+    border: 1px solid var(--euiMediumShade);
+    border-radius: var(--euiBorderRadius);
+    box-shadow: var(--euiShadow);
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Progress Steps */
+.progress-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-bottom: 1px solid var(--euiMediumShade);
+}
+
+.progress-step {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 56px;
+    border: 0;
+    border-right: 1px solid var(--euiMediumShade);
+    background: var(--euiLightShade);
+    color: var(--euiMuted);
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+}
+
+.progress-step:last-child {
+    border-right: none;
+}
+
+.progress-step span {
+    color: var(--euiDarkShade);
+    font-size: 0.8rem;
+}
+
+.progress-step.active {
+    background: var(--euiEmptyShade);
+    color: var(--euiPrimary);
+    box-shadow: inset 0 -2px 0 var(--euiPrimary);
+}
+
+.progress-step.active span {
+    color: var(--euiPrimary);
+}
+
+.page {
+    display: none;
+    padding: 48px;
+    flex-grow: 1;
+}
+
+.page.active {
+    display: block;
+}
+
+h2 {
+    color: var(--euiInk);
+    font-size: 2rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    margin-bottom: 32px;
+}
+
+/* =========================================
+   FORMS & INPUTS (EUI Style)
+   ========================================= */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+label .span,
+.field-title {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--euiInk);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+input[type="text"],
+input[type="email"] {
+    width: 100%;
+    min-height: 40px;
+    background-color: var(--euiLightShade);
+    border: 1px solid var(--euiMediumShade);
+    border-radius: var(--euiBorderRadius);
+    padding: 0 12px;
+    color: var(--euiInk);
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+input:focus {
+    background-color: var(--euiEmptyShade);
+    border-color: var(--euiPrimary);
+    box-shadow: var(--euiFocusRing);
+}
+
+.field-block {
+    margin-top: 32px;
+}
+
+/* EUI Checkable Cards (Radios) */
+.role-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.role-grid label,
+.answer-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 54px;
+    border: 1px solid var(--euiMediumShade);
+    border-radius: var(--euiBorderRadius);
+    padding: 12px 16px;
+    background: var(--euiEmptyShade);
+    color: var(--euiText);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.role-grid label:hover,
+.answer-option:hover {
+    border-color: var(--euiPrimary);
+    background: var(--euiLightShade);
+}
+
+input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: var(--euiPrimary);
+}
+
+/* Active State for Checkable Cards */
+.role-grid label:has(input:checked),
+.answer-option:has(input:checked) {
+    border-color: var(--euiPrimary);
+    background: rgba(0, 119, 204, 0.04);
+    box-shadow: inset 0 0 0 1px var(--euiPrimary);
+}
+
+.other-input {
+    margin-top: 12px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* =========================================
+   BUTTONS
+   ========================================= */
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--euiMediumShade);
+}
+
+.between {
+    justify-content: space-between;
+}
+
+.primary-btn,
+.secondary-btn,
+.ghost-btn {
+    min-height: 40px;
+    border-radius: var(--euiBorderRadius);
+    padding: 0 20px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.primary-btn {
+    background: var(--euiPrimary);
+    color: var(--euiEmptyShade);
+    border: 1px solid transparent;
+}
+
+.primary-btn:hover {
+    background: var(--euiPrimaryHover);
+}
+
+.secondary-btn {
+    background: var(--euiEmptyShade);
+    color: var(--euiInk);
+    border: 1px solid var(--euiDarkShade);
+}
+
+.secondary-btn:hover {
+    background: var(--euiLightShade);
+    border-color: var(--euiInk);
+}
+
+.ghost-btn {
+    background: transparent;
+    color: var(--euiPrimary);
+    border: 1px solid transparent;
+    padding: 0 12px;
+}
+
+.ghost-btn:hover {
+    background: rgba(0, 119, 204, 0.08);
+    text-decoration: underline;
+}
+
+/* =========================================
+   ASSESSMENT QUESTIONS
+   ========================================= */
+.questions-list {
+    display: grid;
+    gap: 24px;
+}
+
+.question-card {
+    border: 1px solid var(--euiMediumShade);
+    border-radius: var(--euiBorderRadius);
+    padding: 24px;
+    background: var(--euiEmptyShade);
+}
+
+.question-card h3 {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: var(--euiInk);
+}
+
+.answer-list {
+    display: grid;
+    gap: 12px;
+}
+
+.answer-option span {
+    line-height: 1.4;
+}
+
+.error-message {
+    color: var(--euiAccentPink);
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-top: 16px;
+}
+
+/* =========================================
+   THE FINAL PERSONA CARD (High Impact)
+   ========================================= */
+.persona-card {
+    width: 100%;
+    border-radius: var(--euiBorderRadius);
+    padding: 40px;
+    color: var(--euiEmptyShade);
+    position: relative;
+    overflow: hidden;
+    background: var(--euiInk);
+    box-shadow: var(--euiShadow);
+    border-top: 4px solid var(--euiPrimary);
+}
+
+/* Funky EUI glowing orbs in the background */
+.persona-card::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background:
+        radial-gradient(circle at 80% 20%, rgba(237, 64, 150, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 20% 80%, rgba(0, 119, 204, 0.15) 0%, transparent 40%);
+    pointer-events: none;
+}
+
+.persona-card>* {
+    position: relative;
+    z-index: 1;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 16px;
+    margin-bottom: 32px;
+}
+
+#personaPlayerCard {
+    color: var(--euiAccentTeal);
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+#personaScore {
+    font-size: 3rem;
+    line-height: 1;
+    font-weight: 800;
+    color: var(--euiAccentYellow);
+}
+
+.player-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 32px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    font-size: 48px;
+}
+
+.card-content {
+    text-align: center;
+}
+
+.card-content h3 {
+    margin: 0 0 8px;
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+#personaTagline {
+    color: var(--euiAccentPink);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 24px;
+}
+
+#personaRole {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 4px;
+    background: rgba(0, 119, 204, 0.2);
+    border: 1px solid rgba(0, 119, 204, 0.4);
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+#personaDescription {
+    color: var(--euiDarkShade);
+    line-height: 1.6;
+    font-size: 1.05rem;
+}
+
+.insight-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 32px;
+}
+
+.insight-strip span {
+    border: 1px solid var(--euiMediumShade);
+    border-radius: 4px;
+    padding: 6px 12px;
+    background: var(--euiLightShade);
+    color: var(--euiMuted);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
+@media (max-width: 980px) {
+    .app {
+        grid-template-columns: 1fr;
+    }
+
+    .match-panel {
+        min-height: 300px;
+        padding: 32px;
+    }
+}
+
+@media (max-width: 680px) {
+    .app {
+        padding: 0;
+        gap: 0;
+    }
+
+    .match-panel {
+        border-radius: 0;
+    }
+
+    .workspace {
+        border: none;
+        border-radius: 0;
+    }
+
+    .page {
+        padding: 24px;
+    }
+
+    .progress-bar {
+        display: none;
+        /* Simplify on mobile */
+    }
+
+    .form-grid,
+    .role-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .primary-btn,
+    .secondary-btn,
+    .ghost-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
