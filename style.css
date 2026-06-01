@@ -595,6 +595,7 @@ input[type="radio"] {
 .persona-card {
     --rotateX: 0deg;
     --rotateY: 0deg;
+    --lift: 0px;
     --shineX: 50%;
     --shineY: 50%;
     position: relative;
@@ -602,7 +603,7 @@ input[type="radio"] {
     border-radius: 18px;
     overflow: hidden;
     transform-style: preserve-3d;
-    transform: rotateX(var(--rotateX)) rotateY(var(--rotateY));
+    transform: translateY(var(--lift)) rotateX(var(--rotateX)) rotateY(var(--rotateY));
     transition: transform 0.18s ease-out;
     will-change: transform;
 }
@@ -612,6 +613,7 @@ input[type="radio"] {
 }
 
 .persona-card:hover {
+    --lift: -3px;
     transition-duration: 0.08s;
 }
 

@@ -311,8 +311,8 @@ function updateCardTilt(event) {
   const bounds = personaCardVisual.getBoundingClientRect();
   const pointerX = (event.clientX - bounds.left) / bounds.width;
   const pointerY = (event.clientY - bounds.top) / bounds.height;
-  const rotateX = (0.5 - pointerY) * 14;
-  const rotateY = (pointerX - 0.5) * 14;
+  const rotateX = (0.5 - pointerY) * 6;
+  const rotateY = (pointerX - 0.5) * 6;
 
   personaCardVisual.style.setProperty("--rotateX", `${rotateX}deg`);
   personaCardVisual.style.setProperty("--rotateY", `${rotateY}deg`);
