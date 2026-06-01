@@ -77,40 +77,52 @@ const personas = {
   A: {
     title: "The SRE Leader",
     tagline: "Stability Under Chaos",
-    role: "Elite Goalkeeper",
-    description: "Calm under pressure, highly reactive, and trusted when everything is on the line.",
+    role: "Full-Pitch Playmaker",
+    description: "Reads the full field, creates visibility, and helps the squad respond cleanly under pressure.",
+    image: "./Persona_cards/web/Playmaker.jpg",
   },
   B: {
     title: "The Developer",
     tagline: "Precision in Execution",
     role: "Creative Midfielder",
     description: "Technical, precise, and responsible for moving the game forward efficiently.",
+    image: "./Persona_cards/web/Midfielder.jpg",
   },
   C: {
     title: "The CISO",
     tagline: "Risk Is the Game",
     role: "Tactical Center Back",
     description: "Reads the game early, protects the organization, and prevents dangerous attacks.",
+    image: "./Persona_cards/web/Defender.jpg",
   },
   D: {
-    title: "The VP of Engineering",
+    title: "The Engineering Leader",
     tagline: "Owning the System",
-    role: "Team Captain / Box-to-Box Midfielder",
-    description: "Connects the entire squad, balances operations and execution, and keeps everyone aligned.",
+    role: "Engineering Striker",
+    description: "Turns engineering alignment into decisive execution and keeps the squad moving toward the goal.",
+    image: "./Persona_cards/web/Striker.jpg",
   },
   E: {
-    title: "The CTO",
+    title: "The CTO / CEO",
     tagline: "Vision Meets Reality",
-    role: "World-Class Manager / Deep-Lying Playmaker",
-    description: "Sees the full pitch, defines the strategy, and builds for long-term success.",
+    role: "Strategic Goalkeeper",
+    description: "Protects the long-term technology vision, makes the critical calls, and keeps growth on course.",
+    image: "./Persona_cards/web/Gaolkeeper.jpg",
   },
 };
+
+Object.values(personas).forEach((persona) => {
+  const image = new Image();
+  image.src = persona.image;
+});
 
 const jobTitleMap = {
   "SRE Leader": "A",
   Developer: "B",
   CISO: "C",
+  "Engineering Leader": "D",
   "VP of Engineering": "D",
+  "CTO / CEO": "E",
   CTO: "E",
 };
 
@@ -123,6 +135,7 @@ const steps = Array.from(document.querySelectorAll(".progress-step"));
 const questionsContainer = document.querySelector("#questionsContainer");
 const errorMessage = document.querySelector("#errorMessage");
 let latestSubmission = null;
+let revealedPersona = null;
 
 function showPage(index) {
   pages.forEach((page, pageIndex) => {
@@ -175,7 +188,6 @@ function getRegistrationData() {
     fullName: document.querySelector("#fullName").value.trim(),
     workEmail: document.querySelector("#workEmail").value.trim(),
     jobTitle: selectedJob ? selectedJob.value : "",
-    otherJobTitle: document.querySelector("#otherJobTitle").value.trim(),
   };
 }
 
@@ -203,11 +215,6 @@ function validateRegistration() {
 
     if (!data.jobTitle) {
     alert("Please select your job title.");
-    return false;
-  }
-
-  if (data.jobTitle === "Other" && !data.otherJobTitle) {
-    alert("Please enter your job title.");
     return false;
   }
 
@@ -258,20 +265,80 @@ function calculatePersona(registration, answers) {
     }
   });
 
+  const jobTitlePersona = jobTitleMap[registration.jobTitle];
+  if (jobTitlePersona) {
+    return jobTitlePersona;
+  }
+
   const highestScore = Math.max(...Object.values(scores));
   const winners = Object.keys(scores).filter((key) => scores[key] === highestScore);
-  const jobTitlePersona = jobTitleMap[registration.jobTitle];
-  return winners.includes(jobTitlePersona) ? jobTitlePersona : winners[0];
+  return winners[0];
 }
 
 function showPersona(personaKey) {
   const persona = personas[personaKey];
+  const personaCard = document.querySelector("#personaCardVisual");
+  const personaImage = document.querySelector("#personaImage");
 
-  document.querySelector("#personaPlayerCard").textContent = persona.role;
-  document.querySelector("#personaTitle").textContent = persona.title;
-  document.querySelector("#personaTagline").textContent = `"${persona.tagline}"`;
-  document.querySelector("#personaRole").textContent = persona.role;
-  document.querySelector("#personaDescription").textContent = persona.description;
+  revealedPersona = persona;
+  personaImage.src = persona.image;
+  personaImage.alt = `${persona.title} football persona card`;
+
+  personaCard.classList.remove("reveal");
+  void personaCard.offsetWidth;
+  personaCard.classList.add("reveal");
+}
+
+async function sharePersonaOnLinkedIn() {
+  if (!revealedPersona) {
+    return;
+  }
+
+  const filename = `${revealedPersona.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}.jpg`;
+  const linkedinComposerUrl = "https://www.linkedin.com/feed/?shareActive=true";
+
+  if (!navigator.share || !navigator.canShare) {
+    downloadPersonaImage(revealedPersona.image, filename);
+    window.open(linkedinComposerUrl, "_blank", "noopener,noreferrer");
+    return;
+  }
+
+  try {
+    const response = await fetch(revealedPersona.image);
+    const blob = await response.blob();
+    const file = new File([blob], filename, { type: blob.type || "image/jpeg" });
+    const shareData = {
+      title: `${revealedPersona.title} football persona`,
+      text: `My Elastic football persona is ${revealedPersona.title}.`,
+      files: [file],
+    };
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share(shareData);
+      return;
+    }
+
+    downloadPersonaImage(URL.createObjectURL(blob), filename, true);
+  } catch (error) {
+    if (error.name === "AbortError") {
+      return;
+    }
+
+    downloadPersonaImage(revealedPersona.image, filename);
+  }
+
+  window.open(linkedinComposerUrl, "_blank", "noopener,noreferrer");
+}
+
+function downloadPersonaImage(url, filename, revokeUrl = false) {
+  const downloadLink = document.createElement("a");
+  downloadLink.href = url;
+  downloadLink.download = filename;
+  downloadLink.click();
+
+  if (revokeUrl) {
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
 }
 
 async function sendToGoogleSheet(data) {
@@ -286,7 +353,6 @@ async function sendToGoogleSheet(data) {
   formData.append("fullName", data.fullName);
   formData.append("workEmail", data.workEmail);
   formData.append("jobTitle", data.jobTitle);
-  formData.append("otherJobTitle", data.otherJobTitle);
   formData.append("timestamp", data.timestamp);
   formData.append("personaTitle", data.personaTitle);
   formData.append("playerCard", data.playerCard);
@@ -296,7 +362,6 @@ async function sendToGoogleSheet(data) {
   // formData.append("Full Name", data.fullName);
   // formData.append("Work Email", data.workEmail);
   // formData.append("Job Title", data.jobTitle);
-  // formData.append("Other Job Title", data.otherJobTitle);
   // formData.append("Timestamp", data.timestamp);
   // formData.append("Persona", data.personaTitle);
   // formData.append("Player Card", data.playerCard);
@@ -363,27 +428,9 @@ document.getElementById('startBtn').addEventListener("click", e => {
 
 
 document.querySelector("#backBtn").addEventListener("click", () => showPage(0));
-
-document.querySelector("#restartBtn").addEventListener("click", () => {
-  document.querySelectorAll("input").forEach((input) => {
-    if (input.type === "radio") {
-      input.checked = false;
-    } else {
-      input.value = "";
-    }
-  });
-
-  document.querySelectorAll(".other-input").forEach((input) => input.classList.add("hidden"));
-  errorMessage.textContent = "";
-  latestSubmission = null;
-  showPage(0);
-});
+document.querySelector("#linkedinShareBtn").addEventListener("click", sharePersonaOnLinkedIn);
 
 document.addEventListener("change", (event) => {
-  if (event.target.name === "jobTitle") {
-    document.querySelector("#otherJobTitle").classList.toggle("hidden", event.target.value !== "Other");
-  }
-
   if (/^q\d+$/.test(event.target.name)) {
     const otherInput = document.querySelector(`#${event.target.name}Other`);
     otherInput.classList.toggle("hidden", event.target.value !== "Other");
@@ -412,6 +459,6 @@ document.querySelector("#questionsForm").addEventListener("submit", async (event
   };
 
   showPersona(personaKey);
-  await sendToGoogleSheet(latestSubmission);
   showPage(2);
+  await sendToGoogleSheet(latestSubmission);
 });

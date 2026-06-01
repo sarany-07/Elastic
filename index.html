@@ -80,15 +80,11 @@
                                     style="margin: 0px;">Developer</span></label>
                             <label><input type="radio" name="jobTitle" value="CISO" /> <span
                                     style="margin: 0px;">CISO</span></label>
-                            <label><input type="radio" name="jobTitle" value="VP of Engineering" /> <span>VP of
-                                    Engineering</span></label>
-                            <label><input type="radio" name="jobTitle" value="CTO" /> <span
-                                    style="margin: 0px;">CTO</span></label>
-                            <label><input type="radio" name="jobTitle" value="Other" /> <span
-                                    style="margin: 0px;">Other</span></label>
+                            <label><input type="radio" name="jobTitle" value="Engineering Leader" /> <span>Engineering
+                                    Leader</span></label>
+                            <label><input type="radio" name="jobTitle" value="CTO / CEO" /> <span
+                                    style="margin: 0px;">CTO / CEO</span></label>
                         </div>
-                        <input id="otherJobTitle" class="hidden other-input" type="text"
-                            placeholder="Enter your job title" />
                     </div>
 
                     <footer class="actions">
@@ -114,34 +110,17 @@
             </section>
 
             <section id="personaPage" class="page">
-                <p class="section-kicker">Your Football Persona</p>
-                <h2>Your player card is ready.</h2>
-
-                <article class="persona-card">
-                    <div class="card-header">
-                        <span id="personaPlayerCard">Player Card</span>
-                        <strong id="personaScore">67</strong>
-                    </div>
-
-                    <div class="player-mark" aria-hidden="true">⚽</div>
-
-                    <div class="card-content">
-                        <h3 id="personaTitle"></h3>
-                        <p id="personaTagline"></p>
-                        <strong id="personaRole"></strong>
-                        <p id="personaDescription"></p>
+                <article class="persona-reveal">
+                    <div class="card-stage">
+                        <div id="personaCardVisual" class="persona-card">
+                            <img id="personaImage" src="" alt="" />
+                            <span class="card-shine" aria-hidden="true"></span>
+                        </div>
                     </div>
                 </article>
 
-
-                <div class="insight-strip">
-                    <span>Operational priorities</span>
-                    <span>Buying readiness</span>
-                    <span>Elastic alignment</span>
-                </div>
-
-                <footer class="actions between">
-                    <button id="restartBtn" class="ghost-btn" type="button">Start Again</button>
+                <footer class="persona-actions">
+                    <button id="linkedinShareBtn" class="linkedin-btn" type="button">Share image on LinkedIn</button>
                 </footer>
             </section>
         </section>
