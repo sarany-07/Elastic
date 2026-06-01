@@ -30,12 +30,7 @@
             </div>
 
             <div class="mini-pitch" aria-hidden="true">
-                <img src="./images/a1-1.we" alt="asset image">
-                <!-- <span class="center-line"></span>
-                <span class="center-circle"></span>
-                <span class="goal left"></span>
-                <span class="goal right"></span>
-                <span class="ball">⚽</span> -->
+                <img src="./images/a1-1.webp" alt="">
             </div>
         </aside>
 
@@ -99,6 +94,15 @@
                 <h2>Choose the answer that sounds most like your squad.</h2>
 
                 <form id="questionsForm">
+                    <div class="assessment-status">
+                        <div>
+                            <span>Match progress</span>
+                            <strong id="answeredCount">0 / 7 plays complete</strong>
+                        </div>
+                        <div class="assessment-track" aria-hidden="true">
+                            <span id="assessmentProgress"></span>
+                        </div>
+                    </div>
                     <div id="questionsContainer" class="questions-list"></div>
                     <p id="errorMessage" class="error-message"></p>
 
