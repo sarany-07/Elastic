@@ -134,6 +134,7 @@ const pages = [
 const steps = Array.from(document.querySelectorAll(".progress-step"));
 const questionsContainer = document.querySelector("#questionsContainer");
 const errorMessage = document.querySelector("#errorMessage");
+const personaCardVisual = document.querySelector("#personaCardVisual");
 let latestSubmission = null;
 
 function showPage(index) {
@@ -302,6 +303,30 @@ function showPersona(personaKey) {
   personaCard.classList.add("reveal");
 }
 
+function updateCardTilt(event) {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    return;
+  }
+
+  const bounds = personaCardVisual.getBoundingClientRect();
+  const pointerX = (event.clientX - bounds.left) / bounds.width;
+  const pointerY = (event.clientY - bounds.top) / bounds.height;
+  const rotateX = (0.5 - pointerY) * 14;
+  const rotateY = (pointerX - 0.5) * 14;
+
+  personaCardVisual.style.setProperty("--rotateX", `${rotateX}deg`);
+  personaCardVisual.style.setProperty("--rotateY", `${rotateY}deg`);
+  personaCardVisual.style.setProperty("--shineX", `${pointerX * 100}%`);
+  personaCardVisual.style.setProperty("--shineY", `${pointerY * 100}%`);
+}
+
+function resetCardTilt() {
+  personaCardVisual.style.setProperty("--rotateX", "0deg");
+  personaCardVisual.style.setProperty("--rotateY", "0deg");
+  personaCardVisual.style.setProperty("--shineX", "50%");
+  personaCardVisual.style.setProperty("--shineY", "50%");
+}
+
 async function sendToGoogleSheet(data) {
   if (!GOOGLE_SCRIPT_URL) {
     return;
@@ -390,6 +415,8 @@ document.getElementById('startBtn').addEventListener("click", e => {
 
 
 document.querySelector("#backBtn").addEventListener("click", () => showPage(0));
+personaCardVisual.addEventListener("pointermove", updateCardTilt);
+personaCardVisual.addEventListener("pointerleave", resetCardTilt);
 
 document.addEventListener("change", (event) => {
   if (/^q\d+$/.test(event.target.name)) {
