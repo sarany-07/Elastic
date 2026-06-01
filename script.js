@@ -1,21 +1,5 @@
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxzX-djo0V25-_XcAUF-BrVqWv1caqLYwHnjdyj_ErUKfvHhnl-mvFka1cUE4ovHoXV/exec";
 
-const ques = [1, 2, 3, 4, 5, 6, 7];
-
-const ques1 = ques.map((item) => {
-  return item + 1;
-})
-
-const quesfilter = ques.filter((item) => {
-  return item % 2 == 0;
-})
-
-const quesreduce = ques.reduce((acc,cur) => {
-  return acc + cur;
-}, 10)
-
-console.log(ques1,quesfilter,quesreduce)
-
 const questions = [
   {
     text: "What’s the biggest challenge facing your squad right now?",
@@ -184,8 +168,6 @@ function renderQuestions() {
     .join("");
 }
 
-
-
 function getRegistrationData() {
   const selectedJob = document.querySelector("input[name='jobTitle']:checked");
 
@@ -197,21 +179,29 @@ function getRegistrationData() {
   };
 }
 
+
 function validateRegistration() {
   const data = getRegistrationData();
   const emailInput = document.querySelector("#workEmail");
+
+
+  function isValidEmail(email) {
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    console.log(pattern.test(email))
+    return pattern.test(email);
+  }
 
   if (!data.fullName) {
     alert("Please enter your full name.");
     return false;
   }
 
-  if (!emailInput.validity.valid || !data.workEmail) {
+  if (!isValidEmail(data.workEmail)) {
     alert("Please enter a valid work email.");
     return false;
   }
 
-  if (!data.jobTitle) {
+    if (!data.jobTitle) {
     alert("Please select your job title.");
     return false;
   }
@@ -321,12 +311,13 @@ async function sendToGoogleSheet(data) {
 
     // Full question text as the column header
     // If the user selected "Other", save what they typed. Otherwise save their standard choice.
+    // const finalAnswer = answer.selected === "Other" ? `F. ${answer.otherText}` : `${answer.selected}. ${answer.answerText}`;
     const finalAnswer = answer.selected === "Other" ? `F. ${answer.otherText}` : `${answer.selected}. ${answer.answerText}`;
     formData.append(answer.question, finalAnswer);
   });
 
   // This converts the FormData into a standard object so the console can read it
-  // console.log(Object.fromEntries(formData.entries()));
+  console.log(Object.fromEntries(formData.entries()));
 
   try {
     await fetch(GOOGLE_SCRIPT_URL, {

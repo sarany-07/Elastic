@@ -73,12 +73,15 @@ button {
     justify-content: space-between;
     min-height: calc(100vh - 48px);
     border-radius: var(--euiBorderRadius);
-    padding: 40px;
+    /* padding: 40px; */
     overflow: hidden;
     /* Deep Elastic Brand Gradient */
-    background: linear-gradient(135deg, var(--euiInk) 0%, #0d121a 100%);
+    /* background: linear-gradient(135deg, var(--euiInk) 0%, #0d121a 100%); */
+    background: url('./images/bg2.webp');
     color: var(--euiEmptyShade);
-    box-shadow: var(--euiShadow);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
 }
 
 .match-panel::before {
@@ -87,14 +90,19 @@ button {
     top: 0;
     left: 0;
     right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--euiAccentYellow), var(--euiPrimary), var(--euiAccentPink), var(--euiAccentTeal));
+    height: 6px;
+    /* background: linear-gradient(90deg, var(--euiAccentYellow), var(--euiPrimary), var(--euiAccentPink), var(--euiAccentTeal)); */
+    background: url('./images/strape.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .elastic-brand {
     display: flex;
     align-items: center;
     gap: 8px;
+    padding: 40px 40px 0px;
     font-size: 1.1rem;
     font-weight: 700;
     letter-spacing: -0.02em;
@@ -128,6 +136,7 @@ button {
 
 .scoreboard {
     max-width: 560px;
+    padding: 0px 40px;
 }
 
 .label,
@@ -149,25 +158,40 @@ p {
 
 h1 {
     margin-bottom: 16px;
-    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-size: clamp(2.4rem, 3vw, 4rem);
     line-height: 1.05;
     letter-spacing: -0.03em;
     font-weight: 800;
 }
 
 .scoreboard p:last-child {
-    color: var(--euiDarkShade);
+    color: #fff;
     font-size: 1.05rem;
     line-height: 1.6;
 }
 
 .mini-pitch {
     position: relative;
-    height: 200px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: var(--euiBorderRadius);
-    background: rgba(255, 255, 255, 0.02);
+    height: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
 }
+
+.mini-pitch img {
+    width: 115%;
+    margin-left: -12%;
+    margin-bottom: -25%;
+    display: block;
+}
+
+/* .mini-pitch img {
+    width: 42vw;
+    max-width: 620px;
+    margin-left: -2vw;
+    margin-bottom: -8vh;
+    display: block;
+} */
 
 .center-line {
     position: absolute;
@@ -607,11 +631,37 @@ input[type="radio"] {
 @media (max-width: 980px) {
     .app {
         grid-template-columns: 1fr;
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
     }
 
     .match-panel {
-        min-height: 300px;
-        padding: 32px;
+        min-height: auto;
+        padding: 0;
+        gap: 32px;
+    }
+
+    .elastic-brand {
+        padding: 32px 32px 0;
+    }
+
+    .scoreboard {
+        padding: 0 32px;
+    }
+
+    .mini-pitch {
+        height: auto;
+    }
+
+    .mini-pitch img {
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: -10%;
+    }
+
+    .workspace {
+        overflow: visible;
     }
 }
 
@@ -623,6 +673,25 @@ input[type="radio"] {
 
     .match-panel {
         border-radius: 0;
+        padding: 0;
+        gap: 24px;
+    }
+
+    .elastic-brand {
+        padding: 24px 24px 0;
+    }
+
+    .scoreboard {
+        padding: 0 24px;
+    }
+
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        margin-bottom: 24px;
     }
 
     .workspace {
@@ -631,7 +700,7 @@ input[type="radio"] {
     }
 
     .page {
-        padding: 24px;
+        padding: 24px 16px;
     }
 
     .progress-bar {
@@ -653,6 +722,14 @@ input[type="radio"] {
     .secondary-btn,
     .ghost-btn {
         width: 100%;
+        text-align: center;
+    }
+
+    .insight-strip {
+        flex-direction: column;
+    }
+
+    .insight-strip span {
         text-align: center;
     }
 }
