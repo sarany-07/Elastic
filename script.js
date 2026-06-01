@@ -143,6 +143,7 @@ function showPage(index) {
 
   steps.forEach((step, stepIndex) => {
     step.classList.toggle("active", stepIndex === index);
+    step.classList.toggle("complete", stepIndex < index);
   });
 
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -193,12 +194,9 @@ function getRegistrationData() {
 
 function validateRegistration() {
   const data = getRegistrationData();
-  const emailInput = document.querySelector("#workEmail");
-
 
   function isValidEmail(email) {
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    console.log(pattern.test(email))
     return pattern.test(email);
   }
 
@@ -242,17 +240,32 @@ function validateAnswers() {
 
     if (!answer.selected) {
       errorMessage.textContent = `Please answer question ${index + 1}.`;
+      document.querySelector(`input[name='q${index + 1}']`).closest(".question-card").scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
       return false;
     }
 
     if (answer.selected === "Other" && !answer.otherText) {
       errorMessage.textContent = `Please add your other answer for question ${index + 1}.`;
+      document.querySelector(`#q${index + 1}Other`).focus();
       return false;
     }
   }
 
   errorMessage.textContent = "";
   return true;
+}
+
+function updateAssessmentProgress() {
+  const answeredCount = questions.filter((question, index) => {
+    return document.querySelector(`input[name='q${index + 1}']:checked`);
+  }).length;
+  const progress = (answeredCount / questions.length) * 100;
+
+  document.querySelector("#answeredCount").textContent = `${answeredCount} / ${questions.length} plays complete`;
+  document.querySelector("#assessmentProgress").style.width = `${progress}%`;
 }
 
 function calculatePersona(registration, answers) {
@@ -345,6 +358,7 @@ async function sendToGoogleSheet(data) {
 }
 
 renderQuestions();
+updateAssessmentProgress();
 
 
 document.getElementById('startBtn').addEventListener("click", e => {
@@ -381,6 +395,7 @@ document.addEventListener("change", (event) => {
   if (/^q\d+$/.test(event.target.name)) {
     const otherInput = document.querySelector(`#${event.target.name}Other`);
     otherInput.classList.toggle("hidden", event.target.value !== "Other");
+    updateAssessmentProgress();
   }
 });
 

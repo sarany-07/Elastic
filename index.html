@@ -16,6 +16,8 @@
 <body>
     <main class="app">
         <aside class="match-panel">
+            <span class="panel-glow glow-one" aria-hidden="true"></span>
+            <span class="panel-glow glow-two" aria-hidden="true"></span>
             <div class="elastic-brand" aria-label="Elastic">
                 <img src="./images/logo.webp" alt="" style="width: 120px;">
             </div>
@@ -27,15 +29,15 @@
                     Find out how your approach to technology, operations, and leadership maps to your team’s style of
                     play.
                 </p>
+                <div class="match-meta" aria-label="Assessment details">
+                    <span><strong>07</strong> Plays</span>
+                    <span><strong>03</strong> Minutes</span>
+                    <span><strong>01</strong> Persona</span>
+                </div>
             </div>
 
             <div class="mini-pitch" aria-hidden="true">
-                <img src="./images/a1-1.we" alt="asset image">
-                <!-- <span class="center-line"></span>
-                <span class="center-circle"></span>
-                <span class="goal left"></span>
-                <span class="goal right"></span>
-                <span class="ball">⚽</span> -->
+                <img src="./images/a1-1.webp" alt="">
             </div>
         </aside>
 
@@ -99,6 +101,15 @@
                 <h2>Choose the answer that sounds most like your squad.</h2>
 
                 <form id="questionsForm">
+                    <div class="assessment-status">
+                        <div>
+                            <span>Match progress</span>
+                            <strong id="answeredCount">0 / 7 plays complete</strong>
+                        </div>
+                        <div class="assessment-track" aria-hidden="true">
+                            <span id="assessmentProgress"></span>
+                        </div>
+                    </div>
                     <div id="questionsContainer" class="questions-list"></div>
                     <p id="errorMessage" class="error-message"></p>
 
@@ -111,6 +122,8 @@
 
             <section id="personaPage" class="page">
                 <article class="persona-reveal">
+                    <span class="reveal-orbit orbit-one" aria-hidden="true"></span>
+                    <span class="reveal-orbit orbit-two" aria-hidden="true"></span>
                     <div class="card-stage">
                         <div id="personaCardVisual" class="persona-card">
                             <img id="personaImage" src="" alt="" />
