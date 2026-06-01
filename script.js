@@ -135,7 +135,6 @@ const steps = Array.from(document.querySelectorAll(".progress-step"));
 const questionsContainer = document.querySelector("#questionsContainer");
 const errorMessage = document.querySelector("#errorMessage");
 let latestSubmission = null;
-let revealedPersona = null;
 
 function showPage(index) {
   pages.forEach((page, pageIndex) => {
@@ -279,66 +278,15 @@ function showPersona(personaKey) {
   const persona = personas[personaKey];
   const personaCard = document.querySelector("#personaCardVisual");
   const personaImage = document.querySelector("#personaImage");
+  const linkedinShareBtn = document.querySelector("#linkedinShareBtn");
 
-  revealedPersona = persona;
   personaImage.src = persona.image;
   personaImage.alt = `${persona.title} football persona card`;
+  linkedinShareBtn.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`;
 
   personaCard.classList.remove("reveal");
   void personaCard.offsetWidth;
   personaCard.classList.add("reveal");
-}
-
-async function sharePersonaOnLinkedIn() {
-  if (!revealedPersona) {
-    return;
-  }
-
-  const filename = `${revealedPersona.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}.jpg`;
-  const linkedinComposerUrl = "https://www.linkedin.com/feed/?shareActive=true";
-
-  if (!navigator.share || !navigator.canShare) {
-    downloadPersonaImage(revealedPersona.image, filename);
-    window.open(linkedinComposerUrl, "_blank", "noopener,noreferrer");
-    return;
-  }
-
-  try {
-    const response = await fetch(revealedPersona.image);
-    const blob = await response.blob();
-    const file = new File([blob], filename, { type: blob.type || "image/jpeg" });
-    const shareData = {
-      title: `${revealedPersona.title} football persona`,
-      text: `My Elastic football persona is ${revealedPersona.title}.`,
-      files: [file],
-    };
-
-    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-      await navigator.share(shareData);
-      return;
-    }
-
-    downloadPersonaImage(URL.createObjectURL(blob), filename, true);
-  } catch (error) {
-    if (error.name === "AbortError") {
-      return;
-    }
-
-    downloadPersonaImage(revealedPersona.image, filename);
-  }
-
-  window.open(linkedinComposerUrl, "_blank", "noopener,noreferrer");
-}
-
-function downloadPersonaImage(url, filename, revokeUrl = false) {
-  const downloadLink = document.createElement("a");
-  downloadLink.href = url;
-  downloadLink.download = filename;
-  downloadLink.click();
-
-  if (revokeUrl) {
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  }
 }
 
 async function sendToGoogleSheet(data) {
@@ -428,7 +376,6 @@ document.getElementById('startBtn').addEventListener("click", e => {
 
 
 document.querySelector("#backBtn").addEventListener("click", () => showPage(0));
-document.querySelector("#linkedinShareBtn").addEventListener("click", sharePersonaOnLinkedIn);
 
 document.addEventListener("change", (event) => {
   if (/^q\d+$/.test(event.target.name)) {
