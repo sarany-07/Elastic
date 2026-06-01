@@ -77,7 +77,7 @@ button {
     flex-direction: column;
     justify-content: space-between;
     min-height: calc(100vh - 48px);
-    border-radius: var(--surfaceRadius);
+    border-radius: var(--euiBorderRadius);
     /* padding: 40px; */
     overflow: hidden;
     /* Deep Elastic Brand Gradient */
@@ -87,7 +87,6 @@ button {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top;
-    box-shadow: 0 20px 55px rgba(11, 29, 56, 0.2);
 }
 
 .match-panel::before {
@@ -102,46 +101,6 @@ button {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    z-index: 3;
-}
-
-.match-panel::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(4, 22, 52, 0.08), rgba(4, 22, 52, 0.38));
-    pointer-events: none;
-}
-
-.match-panel > *:not(.panel-glow) {
-    position: relative;
-    z-index: 1;
-}
-
-.panel-glow {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(4px);
-    opacity: 0.65;
-    pointer-events: none;
-    animation: drift-glow 8s ease-in-out infinite alternate;
-}
-
-.glow-one {
-    width: 190px;
-    height: 190px;
-    top: 12%;
-    right: -75px;
-    background: rgba(0, 191, 179, 0.28);
-}
-
-.glow-two {
-    width: 150px;
-    height: 150px;
-    bottom: 18%;
-    left: -60px;
-    background: rgba(237, 64, 150, 0.2);
-    animation-delay: -3s;
 }
 
 .elastic-brand {
@@ -214,35 +173,6 @@ h1 {
     color: #fff;
     font-size: 1.05rem;
     line-height: 1.6;
-}
-
-.match-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 26px;
-}
-
-.match-meta span {
-    display: grid;
-    gap: 3px;
-    min-width: 88px;
-    padding: 10px 12px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    border-radius: 10px;
-    background: rgba(4, 22, 52, 0.24);
-    color: rgba(255, 255, 255, 0.72);
-    font-size: 0.66rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    backdrop-filter: blur(8px);
-}
-
-.match-meta strong {
-    color: var(--euiAccentTeal);
-    font-size: 1.1rem;
-    letter-spacing: 0;
 }
 
 .mini-pitch {
@@ -656,14 +586,10 @@ input[type="radio"] {
     place-items: center;
     padding: 32px;
     border-radius: 16px;
-    background:
-        radial-gradient(circle at 5% 5%, rgba(0, 191, 179, 0.18), transparent 34%),
-        radial-gradient(circle at 95% 95%, rgba(237, 64, 150, 0.16), transparent 34%),
-        var(--euiInk);
-    box-shadow: 0 18px 45px rgba(26, 28, 33, 0.18);
+    background: transparent;
+    box-shadow: none;
     overflow: hidden;
     position: relative;
-    isolation: isolate;
 }
 
 .persona-actions {
@@ -726,39 +652,6 @@ input[type="radio"] {
         18px 35px 48px rgba(0, 0, 0, 0.38);
 }
 
-.reveal-orbit {
-    position: absolute;
-    border: 1px solid rgba(0, 191, 179, 0.22);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 0;
-}
-
-.orbit-one {
-    width: 430px;
-    height: 430px;
-    animation: spin-orbit 18s linear infinite;
-}
-
-.orbit-two {
-    width: 330px;
-    height: 330px;
-    border-color: rgba(237, 64, 150, 0.2);
-    animation: spin-orbit 14s linear infinite reverse;
-}
-
-.reveal-orbit::after {
-    content: "";
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    top: 50%;
-    left: -5px;
-    border-radius: 50%;
-    background: var(--euiAccentTeal);
-    box-shadow: 0 0 20px var(--euiAccentTeal);
-}
-
 .persona-card img {
     display: block;
     width: 100%;
@@ -812,18 +705,6 @@ input[type="radio"] {
     to {
         opacity: 1;
         transform: translateY(0);
-    }
-}
-
-@keyframes drift-glow {
-    to {
-        transform: translate3d(12px, -16px, 0) scale(1.08);
-    }
-}
-
-@keyframes spin-orbit {
-    to {
-        transform: rotate(360deg);
     }
 }
 
@@ -939,10 +820,6 @@ input[type="radio"] {
         width: min(100%, 280px);
     }
 
-    .match-meta {
-        margin-top: 18px;
-    }
-
     .assessment-status {
         top: 8px;
     }
@@ -950,8 +827,6 @@ input[type="radio"] {
 
 @media (prefers-reduced-motion: reduce) {
     .page.active,
-    .panel-glow,
-    .reveal-orbit,
     .persona-card,
     .persona-card.reveal,
     .persona-card.reveal .card-shine {
